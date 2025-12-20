@@ -42,28 +42,36 @@ class Solution(object):
         :type list2: ListNode
         :rtype: ListNode
         """
-        # Dummy node to simplify head handling
-        dummy = ListNode(-1)
-        current = dummy #aliases pointing to an address in memory
+        if not list1:
+            return list2
+        if not list2:
+            return list1
+        # At this point, none are NULL ptrs
 
-        # Traverse both lists
-        while list1 and list2:
-            if list1.val <= list2.val:
-                current.next = list1
-                # We are modifying the next attribute of the object that both current and dummy point to
-                list1 = list1.next
+        head = list1 if list1.val <= list2.val else list2
+        if head == list1:
+            curr_first = list1.next
+            curr_second = list2
+        else:
+            curr_first = list1
+            curr_second = list2.next
+
+        temp = head
+        while curr_first and curr_second:
+            curr_first_val = curr_first.val
+            curr_second_val = curr_second.val
+
+            if curr_second_val <= curr_first_val:
+                temp.next = curr_second
+                temp = temp.next
+                curr_second = curr_second.next
             else:
-                current.next = list2
-                # We are modifying the next attribute of the object that both current and dummy point to
-                list2 = list2.next
-            current = current.next
-            # Now current stops pointing to the dummy node and starts pointing to the next node (list1 or list2)
-
-        # Attach remaining nodes
-        if list1:
-            current.next = list1
-        if list2:
-            current.next = list2
-
-        # Return head of merged list
-        return dummy.next
+                temp.next = curr_first
+                temp = temp.next
+                curr_first = curr_first.next
+        
+        if curr_first:
+            temp.next = curr_first
+        if curr_second:
+            temp.next = curr_second
+        return head
