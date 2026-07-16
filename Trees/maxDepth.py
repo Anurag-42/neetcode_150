@@ -24,5 +24,6 @@ The algorithm visits each node exactly once, so the time complexity is O(N).
 The auxiliary space is determined by the recursion stack, which is O(H) where H is the tree height
 O(log N) for a balanced tree and O(N) in the worst case for a skewed tree.
 
+space complexity is not the total number of recursive calls—it is the maximum number of calls on the stack at the same time.
 
 '''
